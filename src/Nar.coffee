@@ -50,7 +50,11 @@ class this.Nar
                     URL.revokeObjectURL(url)
                     fileCache = img
                     cb(img)
-                else setTimeout -> cb(false)
+                else
+                  fileCache = blob
+                  cb(blob)
+                _entry = null
+                mimetype = null
         reader.close()
         next(hash)
     ), (er)-> next(false)

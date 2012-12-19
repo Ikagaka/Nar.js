@@ -71,7 +71,7 @@
                 return _entry.getData(new zip.BlobWriter(mimetype), function(blob) {
                   var url;
                   if (/^text/.test(mimetype)) {
-                    return blobToBuffer(blob, function(buffer) {
+                    blobToBuffer(blob, function(buffer) {
                       return bufferToText(buffer, function(text) {
                         fileCache = text;
                         return cb(text);
@@ -79,16 +79,17 @@
                     });
                   } else if (/^image/.test(mimetype)) {
                     url = URL.createObjectURL(blob);
-                    return urlToImage(url, function(img) {
+                    urlToImage(url, function(img) {
                       URL.revokeObjectURL(url);
                       fileCache = img;
                       return cb(img);
                     });
                   } else {
-                    return setTimeout(function() {
-                      return cb(false);
-                    });
+                    fileCache = blob;
+                    cb(blob);
                   }
+                  _entry = null;
+                  return mimetype = null;
                 });
               };
             })();

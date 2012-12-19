@@ -1,6 +1,6 @@
 Nar.js
 ======================
-  Nar.js can manipulate .nar file of "Nanika Archive".
+  Nar.js can read .nar file of "Nanika Archive".
 
 Usage
 ----------
@@ -28,6 +28,8 @@ Features
 ----------------
 * Text file encoding is converted to "UTF-8".
 * Image file is converted to "[object HTMLImageElement]".
+* The others get as blob Object.
+* If you read a file once, it is cached.
 
 Dependence
 ----------
