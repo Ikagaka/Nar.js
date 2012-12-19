@@ -46,7 +46,7 @@ Copyright &copy; 2012 Legokichi Duckscallion
 Acknowledgements
 ----------
 * ls for developing the original Ukagaka software <[usada.sakura.vg](http://usada.sakura.vg/)>
-* SSP project <[ssp.shillest.net/](http://ssp.shillest.net/) for high quality Ukagaka clones. (I did not use their code, but studied them extensively)
+* SSP project <[ssp.shillest.net/](http://ssp.shillest.net/)> for high quality Ukagaka clones. (I did not use their code, but studied them extensively)
 
 See also
 ----------
