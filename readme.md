@@ -35,7 +35,7 @@ Features
 Dependence
 ----------
 * zip.js, mime-types.js, inflate.js <[zip.js](http://gildas-lormeau.github.com/zip.js/)>
-* encoding.js <[Unzipper.js](https://github.com/polygonplanet/Unzipper.js/tree/master/src)>
+* encoding.js <[Unzipper.js](https://github.com/polygonplanet/Unzipper.js/)>
 
 License
 ----------
@@ -45,8 +45,8 @@ Copyright &copy; 2012 Legokichi Duckscallion
 
 Acknowledgements
 ----------
-* ls for developing the original [Ukagaka](http://usada.sakura.vg/)  software &lt;usada.sakura.vg/&gt;
-* [SSP](http://ssp.shillest.net/) project &lt;ssp.shillest.net/&gt; for high quality Ukagaka clones. (I did not use their code, but studied them extensively)
+* ls for developing the original Ukagaka software <[usada.sakura.vg](http://usada.sakura.vg/)>
+* SSP project <[ssp.shillest.net/](http://ssp.shillest.net/) for high quality Ukagaka clones. (I did not use their code, but studied them extensively)
 
 Author
 ----------
