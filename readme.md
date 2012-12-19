@@ -5,7 +5,20 @@ Nar.js
 Usage
 ----------
     new Nar("./nar/mobilemaster.nar", function(nar) {
-        console.dir(nar);
+
+      console.dir(nar);
+
+      nar.shell.master["surface0.png"](function(img) {
+        document.body.appendChild(img);
+      });
+
+      nar.ghost.master["descript.txt"](function(txt) {
+        var pre = document.createElement("pre");
+        pre.innerHTML = txt;
+        document.body.appendChild(pre);
+      });
+
+    });
 
 Demo
 ----------
