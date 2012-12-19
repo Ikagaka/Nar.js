@@ -48,6 +48,10 @@ Acknowledgements
 * ls for developing the original Ukagaka software <[usada.sakura.vg](http://usada.sakura.vg/)>
 * SSP project <[ssp.shillest.net/](http://ssp.shillest.net/) for high quality Ukagaka clones. (I did not use their code, but studied them extensively)
 
+See also
+----------
+* [Ikagaka.js](https://github.com/legokichi/ikagaka.js/)
+
 Author
 ----------
 Legokichi Duckscallion
