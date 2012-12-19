@@ -4,10 +4,8 @@ Nar.js
 
 Usage
 ----------
-
     new Nar("./nar/mobilemaster.nar", function(nar) {
         console.dir(nar);
-
 
 Demo
 ----------
