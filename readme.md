@@ -2,9 +2,14 @@ Nar.js
 ======================
   Nar.js can read .nar file of "Nanika Archive".
 
+Demo
+----------
+* https://dl.dropbox.com/u/265158/GitHub/nar.js/index.html
+* It use [Emily/Phase4.5](http://ssp.shillest.net/ghost.html) as demo.
+
 Usage
 ----------
-    new Nar("./nar/mobilemaster.nar", function(nar) {
+    new Nar("./nar/emily4.nar", function(nar) {
 
       console.dir(nar);
 
@@ -19,10 +24,6 @@ Usage
       });
 
     });
-
-Demo
-----------
-* https://dl.dropbox.com/u/265158/GitHub/nar-js/index.html
 
 Features
 ----------------
