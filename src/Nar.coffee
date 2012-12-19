@@ -1,19 +1,22 @@
-class window.Nar
+class this.Nar
 
   constructor: (url, callback)->
+    zip.workerScriptsPath = "lib/"
     urlToBlob url, (blob)=>
       unzip blob, (hash)=>
         filetree hash, (obj)=>
-          callback(_.extend @, obj)
-    null
+          callback extend(@, obj)
+
+  extend = (obj, original)->
+    for key, val of original
+      obj[key] = val
+    obj
 
   urlToBlob = (url, next) ->
     error = (ev)-> next(false)
     unless url then return setTimeout(error)
-    absUrl = mm.url.resolve(url)
-    unless absUrl.isURL() then return setTimeout(error)
     xhr = new XMLHttpRequest
-    xhr.open("GET", absUrl, true)
+    xhr.open("GET", url, true)
     xhr.responseType = "blob"
     xhr.error = error
     xhr.onload = (ev)->
@@ -23,7 +26,6 @@ class window.Nar
 
   unzip = (blob, next)->
     unless blob then return setTimeout -> next(false)
-    zip.workerScriptsPath = "lib/"
     zip.useWebWorkers = true
     zip.createReader (new zip.BlobReader blob), ((reader)->
       reader.getEntries (entries)->

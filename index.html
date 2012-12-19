@@ -10,9 +10,23 @@
 <script type="text/javascript" charset="utf-8" src="lib/encoding.js"></script>
 <script type="text/javascript" charset="utf-8" src="src/Nar.js"></script>
 <script type="text/javascript">
-var nar = new Nar();
-nar.load("./nar/hoge.nar", function(nar) {
-  console.dir(nar);
+window.addEventListener("load", function(){
+
+  new Nar("./nar/mobilemaster.nar", function(nar) {
+
+    console.dir(nar);
+
+    nar.shell.master["surface0.png"](function(img) {
+      img.style.float = "left";
+      document.body.appendChild(img);
+      
+      nar.ghost.master["descript.txt"](function(txt) {
+        var pre = document.createElement("pre");
+        pre.innerHTML = txt;
+        document.body.appendChild(pre);
+      });
+    });
+  });
 });
 </script>
 </head>

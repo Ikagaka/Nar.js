@@ -1,25 +1,27 @@
 Nar.js
 ======================
-Nar.js can use the ".nar" file of "Nanika Archive" on Web Browser.
+  Nar.js can manipulate .nar file of "Nanika Archive".
 
-See also
-* [Ukagaka](http://usada.sakura.vg/) 
-* [SSP](http://ssp.shillest.net/)
+Usage
+----------
+
+    new Nar("./nar/mobilemaster.nar", function(nar) {
+        console.dir(nar);
+
 
 Demo
-------
-
+----------
+* https://dl.dropbox.com/u/265158/GitHub/nar-js/index.html
 
 Features
 ----------------
-
-
+* Text file encoding is converted to "UTF-8".
+* Image file is converted to "[object HTMLImageElement]".
 
 Dependence
 ----------
-* zip.js, mime-types.js <[zip.js](http://gildas-lormeau.github.com/zip.js/)>
+* zip.js, mime-types.js, inflate.js <[zip.js](http://gildas-lormeau.github.com/zip.js/)>
 * encoding.js <[Unzipper.js](https://github.com/polygonplanet/Unzipper.js/tree/master/src)>
-* 
 
 License
 ----------
@@ -29,8 +31,8 @@ Copyright &copy; 2012 Legokichi Duckscallion
 
 Acknowledgements
 ----------
-* ls for developing the original Ukagaka software &lt;usada.sakura.vg/&gt;
-* SSP project &lt;ssp.shillest.net/&gt; for high quality Ukagaka clones. (I did not use their code, but studied them extensively)
+* ls for developing the original [Ukagaka](http://usada.sakura.vg/)  software &lt;usada.sakura.vg/&gt;
+* [SSP](http://ssp.shillest.net/) project &lt;ssp.shillest.net/&gt; for high quality Ukagaka clones. (I did not use their code, but studied them extensively)
 
 Author
 ----------
