@@ -35,7 +35,7 @@ class this.Nar
             _entry = entry
             mimetype = zip.getMimeType(_entry.filename)
             fileCache = null
-            (cb)->
+            load = (cb)->
               if fileCache isnt null
                 return cb(fileCache)
               _entry.getData (new zip.BlobWriter mimetype), (blob)->
@@ -54,7 +54,11 @@ class this.Nar
                   fileCache = blob
                   cb(blob)
                 _entry = null
-                mimetype = null
+            {
+              load: load
+              mimetype: mimetype
+              filename: _entry.filename
+            }
         reader.close()
         next(hash)
     ), (er)-> next(false)

@@ -60,11 +60,11 @@
           for (_i = 0, _len = entries.length; _i < _len; _i++) {
             entry = entries[_i];
             hash[entry.filename] = (function() {
-              var fileCache, mimetype, _entry;
+              var fileCache, load, mimetype, _entry;
               _entry = entry;
               mimetype = zip.getMimeType(_entry.filename);
               fileCache = null;
-              return function(cb) {
+              load = function(cb) {
                 if (fileCache !== null) {
                   return cb(fileCache);
                 }
@@ -88,9 +88,13 @@
                     fileCache = blob;
                     cb(blob);
                   }
-                  _entry = null;
-                  return mimetype = null;
+                  return _entry = null;
                 });
+              };
+              return {
+                load: load,
+                mimetype: mimetype,
+                filename: _entry.filename
               };
             })();
           }

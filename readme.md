@@ -13,11 +13,11 @@ Usage
 
       console.dir(nar);
 
-      nar.shell.master["surface0.png"](function(img) {
+      nar.shell.master["surface0.png"].load(function(img) {
         document.body.appendChild(img);
       });
 
-      nar.ghost.master["descript.txt"](function(txt) {
+      nar.ghost.master["descript.txt"].load(function(txt) {
         var pre = document.createElement("pre");
         pre.innerHTML = txt;
         document.body.appendChild(pre);

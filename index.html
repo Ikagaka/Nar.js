@@ -16,11 +16,15 @@ window.addEventListener("load", function(){
 
     console.dir(nar);
 
-    nar.shell.master["surface0000.png"](function(img) {
+    obj = nar.shell.master["surface0000.png"];
+
+    console.dir(obj);
+    
+    obj.load(function(img) {
       img.style.float = "left";
       document.body.appendChild(img);
 
-      nar.ghost.master["descript.txt"](function(txt) {
+      obj = nar.ghost.master["descript.txt"].load(function(txt) {
         var pre = document.createElement("pre");
         pre.innerHTML = txt;
         document.body.appendChild(pre);
