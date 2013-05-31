@@ -9,12 +9,15 @@ Demo
 
 Usage
 ----------
+    // download
     new Nar("./nar/emily4.nar", function(nar) {
 
+      // unzip
       nar.shell.master["surface0.png"].load(function(img) {
         document.body.appendChild(img);
       });
 
+      // unzip
       nar.ghost.master["descript.txt"].load(function(txt) {
         var pre = document.createElement("pre");
         pre.innerHTML = txt;
@@ -28,7 +31,6 @@ Features
 * Text file encoding is converted to "UTF-8".
 * Image file is converted to "[object HTMLImageElement]".
 * The others get as blob Object.
-* If you read a file once, it is cached.
 
 Dependence
 ----------

@@ -25,12 +25,16 @@ window.addEventListener("load", function(){
 
     surface = nar.shell.master["surface0000.png"];
     console.dir(surface);
+
+    // unzip
     surface.load(function(img) {
       document.body.appendChild(img);
     });
 
     descript = nar.ghost.master["descript.txt"];
     console.dir(descript);
+
+    // unzip
     descript.load(function(txt) {
       var pre = document.createElement("pre");
       pre.innerHTML = txt;
