@@ -11,8 +11,6 @@ Usage
 ----------
     new Nar("./nar/emily4.nar", function(nar) {
 
-      console.dir(nar);
-
       nar.shell.master["surface0.png"].load(function(img) {
         document.body.appendChild(img);
       });

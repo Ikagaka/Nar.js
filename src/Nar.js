@@ -1,184 +1,89 @@
 (function() {
-
   this.Nar = (function() {
-    var blobToBuffer, blobToDataURL, bufferToText, extend, filetree, unzip, urlToBlob, urlToImage;
+    var blobToBuffer, bufferToText, error, extractFileBlobFromZipBlob, fileBlobToPrimitive, pathHashToDirectoryTree, urlToBlob, urlToImage, zipBlobToPathHash;
+
+    zip.useWebWorkers = true;
+
+    zip.workerScriptsPath = "lib/";
 
     function Nar(url, callback) {
-      var _this = this;
-      zip.workerScriptsPath = "lib/";
+      var nar;
+
+      nar = this;
       urlToBlob(url, function(blob) {
-        return unzip(blob, function(hash) {
-          return filetree(hash, function(obj) {
-            return callback(extend(_this, obj));
+        return zipBlobToPathHash(blob, function(hash) {
+          return pathHashToDirectoryTree(hash, function(tree) {
+            var key, val;
+
+            for (key in tree) {
+              val = tree[key];
+              nar[key] = val;
+            }
+            return callback(nar);
           });
         });
       });
     }
 
-    extend = function(obj, original) {
-      var key, val;
-      for (key in original) {
-        val = original[key];
-        obj[key] = val;
-      }
-      return obj;
+    error = function(e) {
+      console.error(e);
+      throw e;
     };
 
     urlToBlob = function(url, next) {
-      var error, xhr;
-      error = function(ev) {
-        return next(false);
-      };
-      if (!url) {
-        return setTimeout(error);
-      }
+      var xhr;
+
       xhr = new XMLHttpRequest;
       xhr.open("GET", url, true);
       xhr.responseType = "blob";
       xhr.error = error;
-      xhr.onload = function(ev) {
+      xhr.onload = function(e) {
         if (xhr.status === 200) {
           return next(xhr.response);
         } else {
-          return error(ev);
+          return error(e);
         }
       };
       return xhr.send();
     };
 
-    unzip = function(blob, next) {
-      if (!blob) {
-        return setTimeout(function() {
-          return next(false);
+    zipBlobToPathHash = function(blob, next) {
+      var load;
+
+      load = function(callback) {
+        var _this = this;
+
+        return extractFileBlobFromZipBlob(blob, this.filename, function(file) {
+          return fileBlobToPrimitive(file, _this.mimetype, callback);
         });
-      }
-      zip.useWebWorkers = true;
+      };
       return zip.createReader(new zip.BlobReader(blob), (function(reader) {
         return reader.getEntries(function(entries) {
           var entry, hash, _i, _len;
+
           hash = {};
           for (_i = 0, _len = entries.length; _i < _len; _i++) {
             entry = entries[_i];
-            hash[entry.filename] = (function() {
-              var fileCache, load, mimetype, _entry;
-              _entry = entry;
-              mimetype = zip.getMimeType(_entry.filename);
-              fileCache = null;
-              load = function(cb) {
-                if (fileCache !== null) {
-                  return cb(fileCache);
-                }
-                return _entry.getData(new zip.BlobWriter(mimetype), function(blob) {
-                  var url;
-                  if (/^text/.test(mimetype)) {
-                    blobToBuffer(blob, function(buffer) {
-                      return bufferToText(buffer, function(text) {
-                        fileCache = text;
-                        return cb(text);
-                      });
-                    });
-                  } else if (/^image/.test(mimetype)) {
-                    url = URL.createObjectURL(blob);
-                    urlToImage(url, function(img) {
-                      URL.revokeObjectURL(url);
-                      fileCache = img;
-                      return cb(img);
-                    });
-                  } else {
-                    fileCache = blob;
-                    cb(blob);
-                  }
-                  return _entry = null;
-                });
-              };
-              return {
-                load: load,
-                mimetype: mimetype,
-                filename: _entry.filename
-              };
-            })();
+            hash[entry.filename] = Object.create({
+              load: load
+            }, {
+              filename: {
+                value: entry.filename
+              },
+              mimetype: {
+                value: zip.getMimeType(entry.filename)
+              }
+            });
           }
           reader.close();
           return next(hash);
         });
-      }), function(er) {
-        return next(false);
-      });
+      }), error);
     };
 
-    blobToDataURL = function(blob, next) {
-      var reader;
-      if (!blob) {
-        return setTimeout(function() {
-          return next(false);
-        });
-      }
-      reader = new FileReader;
-      reader.onerrer = function() {
-        return next(false);
-      };
-      reader.onload = function() {
-        return next(reader.result);
-      };
-      return reader.readAsDataURL(blob);
-    };
-
-    blobToBuffer = function(blob, next) {
-      var reader;
-      if (!blob) {
-        return setTimeout(function() {
-          return next(false);
-        });
-      }
-      reader = new FileReader;
-      reader.onerrer = function() {
-        return next(false);
-      };
-      reader.onload = function() {
-        return next(reader.result);
-      };
-      return reader.readAsArrayBuffer(blob);
-    };
-
-    bufferToText = function(buffer, next) {
-      var text, uint8Ary, unicode;
-      if (!buffer) {
-        return setTimeout(function() {
-          return next(false);
-        });
-      }
-      uint8Ary = new Uint8Array(buffer);
-      unicode = Encoding.convert(uint8Ary, "UNICODE", "AUTO");
-      text = Encoding.codeToString(unicode);
-      return setTimeout(function() {
-        return next(text);
-      });
-    };
-
-    urlToImage = function(src, next) {
-      var img;
-      if (!src) {
-        return setTimeout(function() {
-          return next(false);
-        });
-      }
-      img = new Image;
-      img.onerror = function() {
-        return next(false);
-      };
-      img.onload = function() {
-        return next(img);
-      };
-      return img.src = src;
-    };
-
-    filetree = function(hash, next) {
+    pathHashToDirectoryTree = function(hash, next) {
       var ary, dir, i, obj, parent, path, root, val, _i, _len;
-      if (!hash) {
-        return setTimeout(function() {
-          return next(false);
-        });
-      }
+
       parent = root = {};
       for (path in hash) {
         val = hash[path];
@@ -193,6 +98,78 @@
       return setTimeout(function() {
         return next(root);
       });
+    };
+
+    extractFileBlobFromZipBlob = function(blob, filename, callback) {
+      return zip.createReader(new zip.BlobReader(blob), (function(reader) {
+        return reader.getEntries(function(entries) {
+          var entry, mimetype, _i, _len;
+
+          for (_i = 0, _len = entries.length; _i < _len; _i++) {
+            entry = entries[_i];
+            if (entry.filename !== filename) {
+              continue;
+            }
+            mimetype = zip.getMimeType(filename);
+            return entry.getData(new zip.BlobWriter(mimetype), function(file) {
+              reader.close();
+              return callback(file);
+            });
+          }
+        });
+      }), function() {
+        return callback(null);
+      });
+    };
+
+    fileBlobToPrimitive = function(blob, mimetype, callback) {
+      var url;
+
+      if (typeof mimetype === "string") {
+        if (/^text/.test(mimetype)) {
+          return blobToBuffer(blob, function(buffer) {
+            return bufferToText(buffer, callback);
+          });
+        } else if (/^image/.test(mimetype)) {
+          url = URL.createObjectURL(blob);
+          return urlToImage(url, callback);
+        }
+      } else {
+        return callback(blob);
+      }
+    };
+
+    blobToBuffer = function(blob, next) {
+      var reader;
+
+      reader = new FileReader;
+      reader.onerrer = error;
+      reader.onload = function() {
+        return next(reader.result);
+      };
+      return reader.readAsArrayBuffer(blob);
+    };
+
+    bufferToText = function(buffer, next) {
+      var text, uint8Ary, unicode;
+
+      uint8Ary = new Uint8Array(buffer);
+      unicode = Encoding.convert(uint8Ary, "UNICODE", "AUTO");
+      text = Encoding.codeToString(unicode);
+      return setTimeout(function() {
+        return next(text);
+      });
+    };
+
+    urlToImage = function(src, next) {
+      var img;
+
+      img = new Image;
+      img.onerror = error;
+      img.onload = function() {
+        return next(img);
+      };
+      return img.src = src;
     };
 
     return Nar;
