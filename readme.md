@@ -1,58 +1,54 @@
-Nar.js
-======================
-  Nar.js can read .nar file of "Nanika Archive".
+# Nar.js [![Build Status](https://api.travis-ci.org/legokichi/Nar.js.png)](http://travis-ci.org/legokichi/Nar.js)
 
-Demo
-----------
-* https://dl.dropbox.com/u/265158/GitHub/nar.js/index.html
-* It use [Emily/Phase4.5](http://ssp.shillest.net/ghost.html) as demo.
+[![npm](https://nodei.co/npm/legokichi.Nar.js.png?downloads=true&stars=true)](https://nodei.co/npm/legokichi.nar.js/)
 
-Usage
-----------
-    // download
-    new Nar("./nar/emily4.nar", function(nar) {
+read .nar file of "Nanika Archive".
 
-      // unzip
-      nar.shell.master["surface0.png"].load(function(img) {
-        document.body.appendChild(img);
-      });
+## Document
 
-      // unzip
-      nar.ghost.master["descript.txt"].load(function(txt) {
-        var pre = document.createElement("pre");
-        pre.innerHTML = txt;
-        document.body.appendChild(pre);
-      });
+- [Nar.js wiki](https://github.com/legokichi/Nar.js/wiki/IframeInserter)
+- [Development](https://github.com/uupaa/WebModule/wiki/Development)
+- [WebModule](https://github.com/uupaa/WebModule) ([Slide](http://uupaa.github.io/Slide/slide/WebModule/index.html))
 
+## How to use
+
+### Browser
+
+```js
+  new Nar("./nar/emily4.nar", function(nar) {
+
+    nar.shell.master["surface0.png"].load(function(img) {
+      document.body.appendChild(img);
     });
 
-Features
-----------------
-* Text file encoding is converted to "UTF-8".
-* Image file is converted to "[object HTMLImageElement]".
-* The others get as blob Object.
+    nar.ghost.master["descript.txt"].load(function(txt) {
+      var pre = document.createElement("pre");
+      pre.innerHTML = txt;
+      document.body.appendChild(pre);
+    });
 
-Dependence
-----------
-* zip.js, mime-types.js, inflate.js <[zip.js](http://gildas-lormeau.github.com/zip.js/)>
-* encoding.js <[Unzipper.js](https://github.com/polygonplanet/Unzipper.js/)>
+  });
+```
 
-License
-----------
-Creative Commons [CC BY-SA 3.0](http://creativecommons.org/licenses/by-sa/3.0/)
+## Features
 
-Copyright &copy; 2012 Legokichi Duckscallion
+- Text file encoding is converted to "UTF-8".
+- Image file is converted to "[object HTMLImageElement]".
+- The others get as blob Object.
 
-Acknowledgements
-----------
-* ls for developing the original Ukagaka software <[usada.sakura.vg](http://usada.sakura.vg/)>
-* SSP project <[ssp.shillest.net](http://ssp.shillest.net/)> for high quality Ukagaka clones. (I did not use their code, but studied them extensively)
-* Thanks for ["UKAGAKA" System Documentation Project](http://code.google.com/p/ukadoc/)
+## Dependence
 
-See also
-----------
+- zip.js, mime-types.js, inflate.js <[zip.js](http://gildas-lormeau.github.com/zip.js/)>
+- encoding.js <[Unzipper.js](https://github.com/polygonplanet/Unzipper.js/)>
+
+
+
+## Acknowledgements
+
+- ls for developing the original Ukagaka software <[usada.sakura.vg](http://usada.sakura.vg/)>
+- SSP project <[ssp.shillest.net](http://ssp.shillest.net/)> for high quality Ukagaka clones. (I did not use their code, but studied them extensively)
+- Thanks for ["UKAGAKA" System Documentation Project](http://code.google.com/p/ukadoc/)
+
+## See also
+
 * [Ikagaka.js](https://github.com/legokichi/ikagaka.js/)
-
-Author
-----------
-Legokichi Duckscallion
