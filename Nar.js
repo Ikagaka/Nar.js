@@ -36,26 +36,14 @@ Nar = (function() {
     zip = new JSZip();
     zip.load(buffer);
     files = zip.files;
-    parent = root = {
-      dir: true,
-      folder: {},
-      file: null
-    };
+    parent = root = {};
     for (path in files) {
       val = files[path];
       ary = path.split("/");
       for (i = _i = 0, _len = ary.length; _i < _len; i = ++_i) {
         dir = ary[i];
-        obj = i === ary.length - 1 ? {
-          dir: false,
-          folder: null,
-          file: val
-        } : {
-          dir: true,
-          folder: {},
-          file: null
-        };
-        parent = parent.folder[dir] = parent.folder[dir] || obj;
+        obj = i === ary.length - 1 ? val : {};
+        parent = parent[dir] = parent[dir] || obj;
       }
       parent = root;
     }

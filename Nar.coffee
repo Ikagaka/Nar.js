@@ -19,12 +19,12 @@ class Nar
     zip = new JSZip()
     zip.load(buffer)
     files = zip.files
-    parent = root = { dir:true, folder:{}, file:null}
+    parent = root = {}
     for path, val of files
       ary = path.split("/")
       for dir, i in ary
-        obj = if i is ary.length - 1 then { dir:false, folder:null, file:val} else { dir:true, folder:{}, file:null}
-        parent = parent.folder[dir] = parent.folder[dir] or obj
+        obj = if i is ary.length - 1 then val else {}
+        parent = parent[dir] = parent[dir] or obj
       parent = root
     root
 
