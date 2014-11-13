@@ -4,8 +4,6 @@ var Nar;
 Nar = (function() {
   var Encoding, JSZip, WMDescript, XMLHttpRequest;
 
-  function Nar() {}
-
   XMLHttpRequest = window["XHRProxy"];
 
   Encoding = window["Encoding"];
@@ -14,21 +12,35 @@ Nar = (function() {
 
   WMDescript = window["WMDescript"];
 
-  Nar.loadFromBuffer = function(buffer, callback) {
+  function Nar() {
+    this.tree = null;
+    this.install = null;
+  }
+
+  Nar.prototype.loadFromBuffer = function(buffer, callback) {
     var tree;
-    tree = Nar.unzip(buffer);
-    return setTimeout(function() {
-      return callback(null, tree);
-    });
+    this.tree = tree = Nar.unzip(buffer);
+    return setTimeout((function(_this) {
+      return function() {
+        _this.install = Nar.parseDescript(Nar.convert(tree["install.txt"].asArrayBuffer()));
+        return callback(null, tree);
+      };
+    })(this));
   };
 
-  Nar.loadFromURL = function(src, callback) {
-    return Nar.wget(src, "arraybuffer", function(err, buffer) {
-      if (!!err) {
-        return callback(err, null);
-      }
-      return Nar.loadFromBuffer(buffer, callback);
-    });
+  Nar.prototype.loadFromURL = function(src, callback) {
+    return Nar.wget(src, "arraybuffer", (function(_this) {
+      return function(err, buffer) {
+        if (!!err) {
+          return callback(err, null);
+        }
+        return _this.loadFromBuffer(buffer, callback);
+      };
+    })(this));
+  };
+
+  Nar.prototype.loadFromBlob = function(blob, callback) {
+    return this.loadFromURL(URL.createObjectURL(blob), callback);
   };
 
   Nar.unzip = function(buffer) {

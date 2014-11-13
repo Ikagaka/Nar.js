@@ -6,14 +6,23 @@ class Nar
   JSZip = window["JSZip"]
   WMDescript = window["WMDescript"]
 
-  @loadFromBuffer: (buffer, callback)->
-    tree = Nar.unzip(buffer)
-    setTimeout -> callback(null, tree)
+  constructor: ->
+    @tree = null
+    @install = null
 
-  @loadFromURL: (src, callback)->
-    Nar.wget src, "arraybuffer", (err, buffer)->
+  loadFromBuffer: (buffer, callback)->
+    @tree = tree = Nar.unzip(buffer)
+    setTimeout =>
+      @install = Nar.parseDescript(Nar.convert(tree["install.txt"].asArrayBuffer()))
+      callback(null, tree)
+
+  loadFromURL: (src, callback)->
+    Nar.wget src, "arraybuffer", (err, buffer)=>
       if !!err then return callback(err, null)
-      Nar.loadFromBuffer(buffer, callback)
+      @loadFromBuffer(buffer, callback)
+
+  loadFromBlob: (blob, callback)->
+    @loadFromURL(URL.createObjectURL(blob), callback)
 
   @unzip = (buffer)->
     zip = new JSZip()
