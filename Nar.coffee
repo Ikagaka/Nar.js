@@ -1,33 +1,30 @@
 
 class Nar
 
-  XMLHttpRequest = window["XMLHttpRequest"]
+  XMLHttpRequest = window["XHRProxy"]
   Encoding = window["Encoding"]
   JSZip = window["JSZip"]
+  WMDescript = window["WMDescript"]
 
-  constructor: ->
-    @tree = null
+  @loadFromBuffer: (buffer, callback)->
+    zip = Nar.unzip(buffer)
+    setTimeout -> callback(null, zip)
 
-  loadFromBuffer: (buffer, callback)->
-    @tree = Nar.unzip(buffer)
-    console.log @tree
-    setTimeout => callback(null, @)
-
-  loadFromURL: (src, callback)->
-    Nar.wget src, "arraybuffer", (err, buffer)=>
+  @loadFromURL: (src, callback)->
+    Nar.wget src, "arraybuffer", (err, buffer)->
       if !!err then return callback(err, null)
-      @loadFromBuffer(buffer, callback)
+      Nar.loadFromBuffer(buffer, callback)
 
   @unzip = (buffer)->
     zip = new JSZip()
     zip.load(buffer)
     files = zip.files
-    parent = root = {}
+    parent = root = { dir:true, folder:{}, file:null}
     for path, val of files
       ary = path.split("/")
       for dir, i in ary
-        obj = if i is ary.length - 1 then new val else {}
-        parent = parent[dir] = parent[dir] or obj
+        obj = if i is ary.length - 1 then { dir:false, folder:null, file:val} else { dir:true, folder:{}, file:null}
+        parent = parent.folder[dir] = parent.folder[dir] or obj
       parent = root
     root
 
@@ -46,3 +43,6 @@ class Nar
     xhr.responseType = type
     xhr.send()
     undefined
+
+  @parseDescript = (text)->
+    WMDescript.parse(text)

@@ -2,37 +2,33 @@
 var Nar;
 
 Nar = (function() {
-  var Encoding, JSZip, XMLHttpRequest;
+  var Encoding, JSZip, WMDescript, XMLHttpRequest;
 
-  XMLHttpRequest = window["XMLHttpRequest"];
+  function Nar() {}
+
+  XMLHttpRequest = window["XHRProxy"];
 
   Encoding = window["Encoding"];
 
   JSZip = window["JSZip"];
 
-  function Nar() {
-    this.tree = null;
-  }
+  WMDescript = window["WMDescript"];
 
-  Nar.prototype.loadFromBuffer = function(buffer, callback) {
-    this.tree = Nar.unzip(buffer);
-    console.log(this.tree);
-    return setTimeout((function(_this) {
-      return function() {
-        return callback(null, _this);
-      };
-    })(this));
+  Nar.loadFromBuffer = function(buffer, callback) {
+    var zip;
+    zip = Nar.unzip(buffer);
+    return setTimeout(function() {
+      return callback(null, zip);
+    });
   };
 
-  Nar.prototype.loadFromURL = function(src, callback) {
-    return Nar.wget(src, "arraybuffer", (function(_this) {
-      return function(err, buffer) {
-        if (!!err) {
-          return callback(err, null);
-        }
-        return _this.loadFromBuffer(buffer, callback);
-      };
-    })(this));
+  Nar.loadFromURL = function(src, callback) {
+    return Nar.wget(src, "arraybuffer", function(err, buffer) {
+      if (!!err) {
+        return callback(err, null);
+      }
+      return Nar.loadFromBuffer(buffer, callback);
+    });
   };
 
   Nar.unzip = function(buffer) {
@@ -40,14 +36,26 @@ Nar = (function() {
     zip = new JSZip();
     zip.load(buffer);
     files = zip.files;
-    parent = root = {};
+    parent = root = {
+      dir: true,
+      folder: {},
+      file: null
+    };
     for (path in files) {
       val = files[path];
       ary = path.split("/");
       for (i = _i = 0, _len = ary.length; _i < _len; i = ++_i) {
         dir = ary[i];
-        obj = i === ary.length - 1 ? new val : {};
-        parent = parent[dir] = parent[dir] || obj;
+        obj = i === ary.length - 1 ? {
+          dir: false,
+          folder: null,
+          file: val
+        } : {
+          dir: true,
+          folder: {},
+          file: null
+        };
+        parent = parent.folder[dir] = parent.folder[dir] || obj;
       }
       parent = root;
     }
@@ -76,6 +84,10 @@ Nar = (function() {
     xhr.responseType = type;
     xhr.send();
     return void 0;
+  };
+
+  Nar.parseDescript = function(text) {
+    return WMDescript.parse(text);
   };
 
   return Nar;
