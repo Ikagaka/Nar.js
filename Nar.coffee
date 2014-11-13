@@ -12,9 +12,10 @@ class Nar
 
   loadFromBuffer: (buffer, callback)->
     @tree = tree = Nar.unzip(buffer)
+    if !tree["install.txt"] then return callback(new Error("install.txt not found"))
     setTimeout =>
       @install = Nar.parseDescript(Nar.convert(tree["install.txt"].asArrayBuffer()))
-      callback(null, tree)
+      callback(null)
 
   loadFromURL: (src, callback)->
     Nar.wget src, "arraybuffer", (err, buffer)=>

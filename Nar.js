@@ -20,10 +20,13 @@ Nar = (function() {
   Nar.prototype.loadFromBuffer = function(buffer, callback) {
     var tree;
     this.tree = tree = Nar.unzip(buffer);
+    if (!tree["install.txt"]) {
+      return callback(new Error("install.txt not found"));
+    }
     return setTimeout((function(_this) {
       return function() {
         _this.install = Nar.parseDescript(Nar.convert(tree["install.txt"].asArrayBuffer()));
-        return callback(null, tree);
+        return callback(null);
       };
     })(this));
   };
