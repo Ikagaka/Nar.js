@@ -1,5 +1,5 @@
 {
-  "name":           "ikagaka.Nar.js",
+  "name":           "ikagaka.nar.js",
   "version":        "1.0.0",
   "description":    "Nanika Archive",
   "url":            "https://github.com/ikagaka/Nar.js",
@@ -12,5 +12,5 @@
   },
   "devDependencies": {
   },
-  "license":        "MIT",
+  "license":        "MIT"
 }
