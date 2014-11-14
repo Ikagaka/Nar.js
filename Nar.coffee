@@ -5,6 +5,7 @@ class Nar
   Encoding = window["Encoding"]
   JSZip = window["JSZip"]
   WMDescript = window["WMDescript"]
+  URL = window["URL"]
 
   constructor: ->
     @tree = null
@@ -19,11 +20,13 @@ class Nar
 
   loadFromURL: (src, callback)->
     Nar.wget src, "arraybuffer", (err, buffer)=>
-      if !!err then return callback(err, null)
+      if !!err then return callback(err)
       @loadFromBuffer(buffer, callback)
 
   loadFromBlob: (blob, callback)->
-    @loadFromURL(URL.createObjectURL(blob), callback)
+    @loadFromURL URL.createObjectURL(blob), (err)->
+      URL.revokeObjectURL(blob)
+      callback(err, buffer)
 
   @unzip = (buffer)->
     zip = new JSZip()

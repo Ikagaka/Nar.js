@@ -2,7 +2,7 @@
 var Nar;
 
 Nar = (function() {
-  var Encoding, JSZip, WMDescript, XMLHttpRequest;
+  var Encoding, JSZip, URL, WMDescript, XMLHttpRequest;
 
   XMLHttpRequest = window["XHRProxy"];
 
@@ -11,6 +11,8 @@ Nar = (function() {
   JSZip = window["JSZip"];
 
   WMDescript = window["WMDescript"];
+
+  URL = window["URL"];
 
   function Nar() {
     this.tree = null;
@@ -35,7 +37,7 @@ Nar = (function() {
     return Nar.wget(src, "arraybuffer", (function(_this) {
       return function(err, buffer) {
         if (!!err) {
-          return callback(err, null);
+          return callback(err);
         }
         return _this.loadFromBuffer(buffer, callback);
       };
@@ -43,7 +45,10 @@ Nar = (function() {
   };
 
   Nar.prototype.loadFromBlob = function(blob, callback) {
-    return this.loadFromURL(URL.createObjectURL(blob), callback);
+    return this.loadFromURL(URL.createObjectURL(blob), function(err) {
+      URL.revokeObjectURL(blob);
+      return callback(err, buffer);
+    });
   };
 
   Nar.unzip = function(buffer) {
