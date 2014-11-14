@@ -1,12 +1,14 @@
+interface JSZipDirectory { [filepath: string]: JSZipObject; };
+interface Descript { [key: string]: string; };
+
 declare class Nar {
   constructor(); // stable
-  install: { [key: string]: string; }; // stable
-  directory: { [filepath: string]: JSZipObject; }; // stable
+  install: Descript; // stable
+  directory: JSZipDirectory; // stable
   loadFromBuffer(buffer: ArrayBuffer, callback: (error: any) => void ): void; // stable
   loadFromBlob(file: Blob, callback: (error: any) => void ): void; // stable
   loadFromURL(src: string, callback: (error: any) => void ): void; // stable
 }
-
 
 declare module Nar {
   function unzip(buffer: ArrayBuffer): any; // stable
