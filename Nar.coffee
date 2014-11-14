@@ -8,14 +8,14 @@ class Nar
   URL = window["URL"]
 
   constructor: ->
-    @tree = null
+    @directory = null
     @install = null
 
   loadFromBuffer: (buffer, callback)->
-    @tree = tree = Nar.unzip(buffer)
-    if !tree["install.txt"] then return callback(new Error("install.txt not found"))
+    @directory = Nar.unzip(buffer)
+    if !@directory["install.txt"] then return callback(new Error("install.txt not found"))
     setTimeout =>
-      @install = Nar.parseDescript(Nar.convert(tree["install.txt"].asArrayBuffer()))
+      @install = Nar.parseDescript(Nar.convert(@directory["install.txt"].asArrayBuffer()))
       callback(null)
 
   loadFromURL: (src, callback)->
@@ -32,15 +32,7 @@ class Nar
   @unzip = (buffer)->
     zip = new JSZip()
     zip.load(buffer)
-    files = zip.files
-    parent = root = {}
-    for path, val of files
-      ary = path.split("/")
-      for dir, i in ary
-        obj = if i is ary.length - 1 then val else {}
-        parent = parent[dir] = parent[dir] or obj
-      parent = root
-    root
+    zip.files
 
   @convert = (buffer)->
     Encoding.codeToString(Encoding.convert(new Uint8Array(buffer), 'UNICODE', 'AUTO'))

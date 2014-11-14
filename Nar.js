@@ -15,19 +15,18 @@ Nar = (function() {
   URL = window["URL"];
 
   function Nar() {
-    this.tree = null;
+    this.directory = null;
     this.install = null;
   }
 
   Nar.prototype.loadFromBuffer = function(buffer, callback) {
-    var tree;
-    this.tree = tree = Nar.unzip(buffer);
-    if (!tree["install.txt"]) {
+    this.directory = Nar.unzip(buffer);
+    if (!this.directory["install.txt"]) {
       return callback(new Error("install.txt not found"));
     }
     return setTimeout((function(_this) {
       return function() {
-        _this.install = Nar.parseDescript(Nar.convert(tree["install.txt"].asArrayBuffer()));
+        _this.install = Nar.parseDescript(Nar.convert(_this.directory["install.txt"].asArrayBuffer()));
         return callback(null);
       };
     })(this));
@@ -54,22 +53,10 @@ Nar = (function() {
   };
 
   Nar.unzip = function(buffer) {
-    var ary, dir, files, i, obj, parent, path, root, val, zip, _i, _len;
+    var zip;
     zip = new JSZip();
     zip.load(buffer);
-    files = zip.files;
-    parent = root = {};
-    for (path in files) {
-      val = files[path];
-      ary = path.split("/");
-      for (i = _i = 0, _len = ary.length; _i < _len; i = ++_i) {
-        dir = ary[i];
-        obj = i === ary.length - 1 ? val : {};
-        parent = parent[dir] = parent[dir] || obj;
-      }
-      parent = root;
-    }
-    return root;
+    return zip.files;
   };
 
   Nar.convert = function(buffer) {

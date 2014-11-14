@@ -1,7 +1,7 @@
 declare class Nar {
   constructor(); // stable
   install: { [key: string]: string; }; // stable
-  tree: any; // unstable
+  directory: { [filepath: string]: JSZipObject; }; // stable
   loadFromBuffer(buffer: ArrayBuffer, callback: (error: any) => void ): void; // stable
   loadFromBlob(file: Blob, callback: (error: any) => void ): void; // stable
   loadFromURL(src: string, callback: (error: any) => void ): void; // stable
