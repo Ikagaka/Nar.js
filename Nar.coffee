@@ -24,8 +24,9 @@ class Nar
       @loadFromBuffer(buffer, callback)
 
   loadFromBlob: (blob, callback)->
-    @loadFromURL URL.createObjectURL(blob), (err)->
-      URL.revokeObjectURL(blob)
+    url = URL.createObjectURL(blob)
+    @loadFromURL url, (err)->
+      URL.revokeObjectURL(url)
       callback(err, buffer)
 
   @unzip = (buffer)->

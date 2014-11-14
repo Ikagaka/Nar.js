@@ -45,8 +45,10 @@ Nar = (function() {
   };
 
   Nar.prototype.loadFromBlob = function(blob, callback) {
-    return this.loadFromURL(URL.createObjectURL(blob), function(err) {
-      URL.revokeObjectURL(blob);
+    var url;
+    url = URL.createObjectURL(blob);
+    return this.loadFromURL(url, function(err) {
+      URL.revokeObjectURL(url);
       return callback(err, buffer);
     });
   };
