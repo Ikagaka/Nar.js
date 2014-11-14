@@ -27,7 +27,7 @@ class Nar
     url = URL.createObjectURL(blob)
     @loadFromURL url, (err)->
       URL.revokeObjectURL(url)
-      callback(err, buffer)
+      callback(err)
 
   @unzip = (buffer)->
     zip = new JSZip()

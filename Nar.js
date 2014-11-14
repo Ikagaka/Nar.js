@@ -49,7 +49,7 @@ Nar = (function() {
     url = URL.createObjectURL(blob);
     return this.loadFromURL(url, function(err) {
       URL.revokeObjectURL(url);
-      return callback(err, buffer);
+      return callback(err);
     });
   };
 
