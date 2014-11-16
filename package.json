@@ -1,6 +1,6 @@
 {
   "name":           "ikagaka.nar.js",
-  "version":        "2.0.1",
+  "version":        "2.0.2",
   "description":    "Nanika Archive Reader",
   "url":            "https://github.com/ikagaka/Nar.js",
   "keywords":       ["nar", "ikagaka", "unstable", "ukagaka"],
@@ -9,12 +9,12 @@
     "url":          "https://github.com/ikagaka/Nar.js"
   },
   "dependencies": {
-  },
-  "devDependencies": {
     "jszip": "",
     "encoding-japanese": "",
     "ikagaka.wmdescript.js": "",
     "uupaa.xhrproxy.js": ""
+  },
+  "devDependencies": {
   },
   "license":        "MIT"
 }
