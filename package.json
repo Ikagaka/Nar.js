@@ -9,12 +9,12 @@
     "url":          "https://github.com/ikagaka/Nar.js"
   },
   "dependencies": {
+  },
+  "devDependencies": {
     "jszip": "",
     "encoding-japanese": "",
     "ikagaka.wmdescript.js": "",
     "uupaa.xhrproxy.js": ""
-  },
-  "devDependencies": {
   },
   "license":        "MIT"
 }
