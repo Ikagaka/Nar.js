@@ -10,6 +10,10 @@ nar.loadFromURL("./vender/mobilemaster.nar", function(err){
 
   console.dir(nar);
 
+  console.log(nar.grep(/^shell\/master\//));
+
+  console.log(nar.getDirectory(/^shell\/master\//));
+
   var pre = document.createElement("pre")
   pre.appendChild(document.createTextNode(JSON.stringify(nar.install, null, "  ")));
   document.body.appendChild(pre);

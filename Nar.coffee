@@ -29,6 +29,17 @@ class Nar
       URL.revokeObjectURL(url)
       callback(err)
 
+  grep: (regexp)->
+    Object.keys(@directory)
+      .filter((path)-> regexp.test(path))
+
+  getDirectory: (regexp)->
+    @grep(regexp)
+      .reduce(((dir, path, zip)=>
+        dir[path.replace(regexp, "")] = @directory[path]
+        dir;
+      ), {})
+
   @unzip = (buffer)->
     zip = new JSZip()
     zip.load(buffer)

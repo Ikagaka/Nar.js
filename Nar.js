@@ -52,6 +52,21 @@ Nar = (function() {
     });
   };
 
+  Nar.prototype.grep = function(regexp) {
+    return Object.keys(this.directory).filter(function(path) {
+      return regexp.test(path);
+    });
+  };
+
+  Nar.prototype.getDirectory = function(regexp) {
+    return this.grep(regexp).reduce(((function(_this) {
+      return function(dir, path, zip) {
+        dir[path.replace(regexp, "")] = _this.directory[path];
+        return dir;
+      };
+    })(this)), {});
+  };
+
   Nar.unzip = function(buffer) {
     var zip;
     zip = new JSZip();
