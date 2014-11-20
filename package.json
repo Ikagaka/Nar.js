@@ -1,20 +1,41 @@
 {
   "name":           "ikagaka.nar.js",
-  "version":        "2.0.3",
+  "version":        "2.1.0",
   "description":    "Nanika Archive Reader",
   "url":            "https://github.com/ikagaka/Nar.js",
-  "keywords":       ["nar", "ikagaka", "unstable", "ukagaka"],
+  "keywords":       ["nar", "ikagaka", "Unstable", "ukagaka"],
   "repository": {
     "type":         "git",
     "url":          "https://github.com/ikagaka/Nar.js"
   },
+  "scripts": {
+    "init":  "npm update; npm run build;",
+    "watch": "node node_modules/uupaa.watch.js --verbose --action build ./lib/*.coffee",
+    "build":         "npm run compile;                  npm run browserify;",
+    "build-release": "npm run compile; npm run exclude; npm run browserify;",
+    "compile": "coffee -o ./lib -cb ./lib/*.coffee;",
+    "exclude": "node node_modules/uupaa.minify.js --verbose --strict --pretty --nowrap --nocompile --simple --source ./lib/*.js --output ./lib/*.js",
+    "browserify": "browserify --standalone Nar ./lib/Nar.js > ./release/Nar.js",
+    "minify":  "node node_modules/uupaa.minify.js --verbose --strict --nowrap --simple --source ./release/Nar.js --output ./release/Nar.min.js",
+    "test": "open ./test/test.html",
+    "hint": "jshint ./lib/*.js"
+  },
   "dependencies": {
     "jszip": "",
-    "encoding-japanese": "",
-    "ikagaka.wmdescript.js": "",
-    "uupaa.xhrproxy.js": ""
+    "encoding-japanese": ""
   },
   "devDependencies": {
+    "uupaa.nodemodule.js": "",
+    "uupaa.reflection.js": "",
+    "uupaa.console.js":   "",
+    "uupaa.valid.js":   "",
+    "uupaa.help.js":    "",
+    "uupaa.watch.js":   "",
+    "uupaa.minify.js":  ""
   },
-  "license":        "MIT"
+  "lib":            "./lib/",
+  "main":           "./release/Nar.min.js",
+  "author":         "duxca",
+  "license":        "MIT",
+  "contributors":   []
 }
