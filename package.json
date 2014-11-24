@@ -1,6 +1,6 @@
 {
   "name":           "ikagaka.nar.js",
-  "version":        "2.0.4",
+  "version":        "2.0.5",
   "description":    "Nanika Archive Reader",
   "url":            "https://github.com/ikagaka/Nar.js",
   "keywords":       ["nar", "ikagaka", "unstable", "ukagaka"],
@@ -9,7 +9,8 @@
     "url":          "https://github.com/ikagaka/Nar.js"
   },
   "scripts": {
-    "watch": "coffee -cwb ./*.coffee"
+    "watch": "coffee -cwb ./*.coffee",
+    "build": "coffee -cb ./*.coffee"
   },
   "dependencies": {
     "jszip": "",
@@ -19,5 +20,8 @@
   },
   "devDependencies": {
   },
-  "license":        "MIT"
+  "main":           "./Nar.js",
+  "author":         "duxca",
+  "license":        "MIT",
+  "contributors":   []
 }

@@ -5,6 +5,7 @@ class Nar
   Encoding = window["Encoding"]
   JSZip = window["JSZip"]
   WMDescript = window["WMDescript"]
+  
   URL = window["URL"]
 
   constructor: ->
@@ -70,3 +71,6 @@ class Nar
 
   @parseDescript = (text)->
     WMDescript.parse(text)
+
+if module?.exports?
+  module.exports = Nar
