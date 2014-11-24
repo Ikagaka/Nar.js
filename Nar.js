@@ -71,7 +71,12 @@ Nar = (function() {
     var zip;
     zip = new JSZip();
     zip.load(buffer);
-    return zip.files;
+    return Object.keys(zip.files).reduce((function(dic, filePath) {
+      var path;
+      path = filePath.split("\\").join("/");
+      dic[path] = zip.files[filePath];
+      return dic;
+    }), {});
   };
 
   Nar.convert = function(buffer) {

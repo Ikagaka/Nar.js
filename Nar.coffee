@@ -43,7 +43,14 @@ class Nar
   @unzip = (buffer)->
     zip = new JSZip()
     zip.load(buffer)
-    zip.files
+    Object
+      .keys(zip.files)
+      .reduce(((dic, filePath)->
+        path = filePath.split("\\").join("/")
+        dic[path] = zip.files[filePath]
+        dic
+      ), {})
+
 
   @convert = (buffer)->
     Encoding.codeToString(Encoding.convert(new Uint8Array(buffer), 'UNICODE', 'AUTO'))
