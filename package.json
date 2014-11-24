@@ -1,6 +1,6 @@
 {
   "name":           "ikagaka.nar.js",
-  "version":        "2.0.7",
+  "version":        "2.0.8",
   "description":    "Nanika Archive Reader",
   "url":            "https://github.com/ikagaka/Nar.js",
   "keywords":       ["nar", "ikagaka", "unstable", "ukagaka"],
@@ -9,7 +9,7 @@
     "url":          "https://github.com/ikagaka/Nar.js"
   },
   "scripts": {
-    "watch": "node node_modules/uupaa.watch.js --verbose --action build ./*.coffee",
+    "watch": "coffee -cbw ./*.coffee",
     "build": "coffee -cb ./*.coffee"
   },
   "dependencies": {
@@ -19,7 +19,6 @@
     "uupaa.xhrproxy.js": ""
   },
   "devDependencies": {
-    "uupaa.watch.js": ""
   },
   "main":           "./Nar.js",
   "author":         "duxca",
