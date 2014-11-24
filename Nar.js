@@ -114,3 +114,7 @@ Nar = (function() {
 if ((typeof module !== "undefined" && module !== null ? module.exports : void 0) != null) {
   module.exports = Nar;
 }
+
+if (window["Ikagaka"] != null) {
+  window["Ikagaka"]["Nar"] = Nar;
+}

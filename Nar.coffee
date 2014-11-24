@@ -5,7 +5,7 @@ class Nar
   Encoding = window["Encoding"]
   JSZip = window["JSZip"]
   WMDescript = window["WMDescript"]
-  
+
   URL = window["URL"]
 
   constructor: ->
@@ -74,3 +74,6 @@ class Nar
 
 if module?.exports?
   module.exports = Nar
+
+if window["Ikagaka"]?
+  window["Ikagaka"]["Nar"] = Nar

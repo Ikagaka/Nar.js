@@ -9,8 +9,7 @@
     "url":          "https://github.com/ikagaka/Nar.js"
   },
   "scripts": {
-    "watch": "coffee -cwb ./*.coffee",
-    "build": "coffee -cb ./*.coffee"
+    "browserify": "coffee -cb ./*.coffee; browserify --standalone Nar Nar.js > Nar.browserify.js"
   },
   "dependencies": {
     "jszip": "",
