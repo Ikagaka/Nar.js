@@ -21,7 +21,7 @@
   "devDependencies": {
   },
   "main":           "./Nar.js",
-  "author":         "duxca",
+  "author":         "Ikagaka",
   "license":        "MIT",
-  "contributors":   []
+  "contributors":   ["legokichi", "ponapalt"]
 }
