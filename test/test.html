@@ -1,21 +1,21 @@
-<script src="./node_modules/encoding-japanese/encoding.js"></script>
-<script src="./vender/jszip.min.js"></script>
-<script src="./vender/XHRProxy.min.js"></script>
-<script src="./vender/WMDescript.js"></script>
-<script src="./Nar.js"></script>
+<script src="../node_modules/encoding-japanese/encoding.js"></script>
+<script src="../vender/jszip.min.js"></script>
+<script src="../vender/XHRProxy.min.js"></script>
+<script src="../vender/WMDescript.js"></script>
+<script src="../Nar.js"></script>
 <p>
   nar: <input type="file" id="nar" />
 </p>
 <script>
 document.getElementById("nar").addEventListener("change", function(ev){
-  var nar = new Nar();
-  nar.loadFromBlob(ev.target.files[0], loadHandler.bind(this, nar));
+  var narloader = new NarLoader();
+  narloader.loadFromBlob(ev.target.files[0], loadHandler);
 });
-var nar = new Nar();
+var narloader = new NarLoader();
 
-nar.loadFromURL("./vender/mobilemaster.nar", loadHandler.bind(this, nar));
+narloader.loadFromURL("../vender/mobilemaster.nar", loadHandler);
 
-function loadHandler(nar, err){
+function loadHandler(err, nar){
   if(!!err) return console.error(err.stack);
 
   console.dir(nar);
