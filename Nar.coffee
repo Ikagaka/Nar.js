@@ -20,9 +20,9 @@ class NarLoader
 
   loadFromBlob: (blob, callback)->
     url = URL.createObjectURL(blob)
-    @loadFromURL url, (err)->
+    @loadFromURL url, (err, nar)->
       URL.revokeObjectURL(url)
-      callback(err)
+      callback(err, nar)
 
   @unzip = (buffer)->
     zip = new JSZip()
