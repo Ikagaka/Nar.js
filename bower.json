@@ -1,0 +1,22 @@
+{
+	"name": "ikagaka.nar.js",
+	"description": "Nanika Archive Reader",
+	"dependencies": {
+		"encoding-japanese": "polygonplanet/encoding.js#master",
+		"jszip": ""
+	},
+	"main": ["Nar.js"],
+	"ignore": [
+		"**/.*",
+		"bower_components",
+		"node_modules",
+		"npm-debug.log",
+		"coverage",
+		"vender"
+	],
+	"exportsOverride": {
+		"encoding-japanese": {
+			"js": "encoding.min.js"
+		}
+	}
+}
