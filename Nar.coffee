@@ -1,9 +1,8 @@
-XMLHttpRequest = @XHRProxy
 JSZip = @JSZip
-URL = @URL
-if require?
-  XMLHttpRequest ?= require 'uupaa.nodeproxy.js'
+XMLHttpRequest = @XHRProxy
+if this["process"]?
   JSZip ?= require 'jszip'
+  XMLHttpRequest ?= require 'uupaa.nodeproxy.js'
 
 class NarLoader
 
@@ -14,7 +13,6 @@ class NarLoader
       return callback(err)
     setTimeout ->
       callback(null, nar)
-
   loadFromURL: (src, callback)->
     NarLoader.wget src, "arraybuffer", (err, buffer)=>
       if !!err then return callback(err)
@@ -50,7 +48,7 @@ class NarLoader
 
 Encoding = @Encoding
 WMDescript = @WMDescript
-if require?
+if this["process"]?
   Encoding ?= require 'encoding-japanese'
   WMDescript ?= require 'ikagaka.wmdescript.js'
 
