@@ -9,8 +9,8 @@
     "url":          "https://github.com/ikagaka/Nar.js"
   },
   "scripts": {
-    "watch": "coffee -cbw ./*.coffee",
-    "build": "coffee -cb ./*.coffee"
+    "watch": "coffee -cw ./*.coffee",
+    "build": "coffee -c ./*.coffee"
   },
   "dependencies": {
     "jszip": "",
