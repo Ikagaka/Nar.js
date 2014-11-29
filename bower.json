@@ -12,7 +12,7 @@
 		"node_modules",
 		"npm-debug.log",
 		"coverage",
-		"vender"
+		"vendor"
 	],
 	"exportsOverride": {
 		"encoding-japanese": {
