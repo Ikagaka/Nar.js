@@ -16,7 +16,7 @@ Nanika Archive Reader
 <script src="./Nar.js"></script>
 <script>
 var loader = new Nar.Loader();
-loader.loadFromURL("./vender/mobilemaster.nar", function(err, nar){
+loader.loadFromURL("./vendor/mobilemaster.nar", function(err, nar){
   if(!!err) return console.error(err.stack);
 
   console.log(nar);
