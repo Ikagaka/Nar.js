@@ -1,19 +1,20 @@
 <script src="../node_modules/encoding-japanese/encoding.js"></script>
-<script src="../vender/jszip.min.js"></script>
-<script src="../vender/XHRProxy.min.js"></script>
-<script src="../vender/WMDescript.js"></script>
+<script src="../vendor/jszip.min.js"></script>
+<script src="../vendor/XHRProxy.min.js"></script>
+<script src="../vendor/WMDescript.js"></script>
 <script src="../Nar.js"></script>
-<p>
-  nar: <input type="file" id="nar" />
-</p>
+<p>nar: <input type="file" id="nar" /></p>
 <script>
-document.getElementById("nar").addEventListener("change", function(ev){
-  var narloader = new NarLoader();
-  narloader.loadFromBlob(ev.target.files[0], loadHandler);
+var input = document.getElementById("nar");
+input.addEventListener("change", function(ev){
+  var loader = new Nar.Loader();
+  file = ev.target.files[0]
+  loader.loadFromBlob(file, loadHandler);
+  input.value = null;
 });
-var narloader = new NarLoader();
 
-narloader.loadFromURL("../vender/mobilemaster.nar", loadHandler);
+var loader = new Nar.Loader();
+loader.loadFromURL("../vendor/mobilemaster.nar", loadHandler);
 
 function loadHandler(err, nar){
   if(!!err) return console.error(err.stack);
@@ -25,7 +26,9 @@ function loadHandler(err, nar){
   console.log(nar.getDirectory(/^shell\/master\//));
 
   var pre = document.createElement("pre")
-  pre.appendChild(document.createTextNode(JSON.stringify(nar.install, null, "  ")));
+  pre.appendChild(
+    document.createTextNode(
+      JSON.stringify(nar.install, null, "  ")));
   document.body.appendChild(pre);
 }
 </script>

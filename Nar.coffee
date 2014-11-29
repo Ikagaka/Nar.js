@@ -1,21 +1,28 @@
-JSZip = @JSZip
-XMLHttpRequest = @XHRProxy
 if this["process"]?
-  JSZip ?= require 'jszip'
-  XMLHttpRequest ?= require 'uupaa.nodeproxy.js'
+  JSZip = require('jszip')
+  Encoding = require('encoding-japanese')
+  WMDescript = require('ikagaka.wmdescript.js')
+  XMLHttpRequest = require('uupaa.nodeproxy.js')
+else
+  JSZip = @JSZip
+  Encoding = @Encoding
+  WMDescript = @WMDescript
+  XMLHttpRequest = @XHRProxy
 
-class NarLoader
+
+class Loader
 
   loadFromBuffer: (buffer, callback)->
     try
-      nar = new Nar(NarLoader.unzip(buffer))
+      nar = new Nar(Loader.unzip(buffer))
     catch err
-      return callback(err)
+      return callback(err, null)
     setTimeout ->
       callback(null, nar)
+
   loadFromURL: (src, callback)->
-    NarLoader.wget src, "arraybuffer", (err, buffer)=>
-      if !!err then return callback(err)
+    Loader.wget src, "arraybuffer", (err, buffer)=>
+      if !!err then return callback(err, null)
       @loadFromBuffer(buffer, callback)
 
   loadFromBlob: (blob, callback)->
@@ -46,11 +53,6 @@ class NarLoader
     xhr.send()
     undefined
 
-Encoding = @Encoding
-WMDescript = @WMDescript
-if this["process"]?
-  Encoding ?= require 'encoding-japanese'
-  WMDescript ?= require 'ikagaka.wmdescript.js'
 
 class Nar
 
@@ -75,11 +77,12 @@ class Nar
   @parseDescript = (text)->
     WMDescript.parse(text)
 
+  @Loader = Loader
+
+
 if module?.exports?
-  module.exports = Nar: Nar, NarLoader: NarLoader
+  module.exports = Nar
 else if @Ikagaka?
   @Ikagaka.Nar = Nar
-  @Ikagaka.NarLoader = NarLoader
 else
   @Nar = Nar
-  @NarLoader = NarLoader

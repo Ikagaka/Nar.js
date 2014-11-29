@@ -1,28 +1,23 @@
-interface JSZipDirectory { [filePath: string]: JSZipObject; };
-interface Descript { [key: string]: string; };
-
-declare class Nar {
-  constructor(); // stable
-  install: Descript; // stable
-  directory: JSZipDirectory; // stable
-  loadFromBuffer(buffer: ArrayBuffer, callback: (error: any) => void ): void; // stable
-  loadFromBlob(file: Blob, callback: (error: any) => void ): void; // stable
-  loadFromURL(src: string, callback: (error: any) => void ): void; // stable
-  grep(reg: RegExp): string[]; // unstable
-  getDirectory(reg: RegExp): JSZipDirectory; // unstable
+interface Loader {
+  new (): Loader;
+  loadFromBuffer(buffer: ArrayBuffer, callback: (error: any, nar: Nar) => void ): void;
+  loadFromBlob(  file: Blob,          callback: (error: any, nar: Nar) => void ): void;
+  loadFromURL(   src: string,         callback: (error: any, nar: Nar) => void ): void;
 }
 
-declare module Nar {
-  function unzip(buffer: ArrayBuffer): any; // unstable
-  function convert(buffer: ArrayBuffer): string; // unstable
-  function wget(url: string, responseType: string, callback: (error: any, response: any) => void): void; // unstable
-  function parseDescript(text: string): { [key: string]: string; }; // unstable
+interface Nar {
+  install: { [key: string]: string; };
+  directory: JSZipDirectory;
+  grep(reg: RegExp): string[];
+  getDirectory(reg: RegExp): { [filePath: string]: JSZipObject; };
 }
 
-declare module 'nar' {
-  var foo: typeof Nar;
-  module rsvp {
-    export var Nar: typeof foo;
+declare var Nar: {
+  new (directory: { [filePath: string]: JSZipObject; }): Nar;
+  convert(buffer: ArrayBuffer): string;
+  parseDescript(text: string): { [key: string]: string; };
+  Loader: {
+    unzip(buffer: ArrayBuffer): { [filePath: string]: JSZipObject; };
+    wget(url: string, responseType: string, callback: (error: any, response: any) => void): void;
   }
-  export = rsvp;
 }
