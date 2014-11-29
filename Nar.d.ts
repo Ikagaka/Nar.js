@@ -1,5 +1,4 @@
 interface Loader {
-  new (): Loader;
   loadFromBuffer(buffer: ArrayBuffer, callback: (error: any, nar: Nar) => void ): void;
   loadFromBlob(  file: Blob,          callback: (error: any, nar: Nar) => void ): void;
   loadFromURL(   src: string,         callback: (error: any, nar: Nar) => void ): void;
@@ -17,6 +16,7 @@ declare var Nar: {
   convert(buffer: ArrayBuffer): string;
   parseDescript(text: string): { [key: string]: string; };
   Loader: {
+    new (): Loader;
     unzip(buffer: ArrayBuffer): { [filePath: string]: JSZipObject; };
     wget(url: string, responseType: string, callback: (error: any, response: any) => void): void;
   }
