@@ -8,7 +8,7 @@ interface Nar {
   install: { [key: string]: string; };
   directory: JSZipDirectory;
   grep(reg: RegExp): string[];
-  getDirectory(reg: RegExp): { [filePath: string]: JSZipObject; };
+  getDirectory(reg: RegExp): { [filePath: string]: ArrayBuffer; };
 }
 
 declare var Nar: {

@@ -67,7 +67,7 @@ class Nar
   getDirectory: (regexp)->
     @grep(regexp)
       .reduce(((dir, path, zip)=>
-        dir[path.replace(regexp, "")] = @directory[path]
+        dir[path.replace(regexp, "")] = @directory[path].asArrayBuffer()
         dir
       ), {})
 
