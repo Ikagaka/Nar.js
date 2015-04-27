@@ -1,3 +1,7 @@
+Nar.js is not maintained now.
+
+Please use [Ikagaka/NarLoader](https://github.com/Ikagaka/NarLoader).
+
 # Nar.js
 
 Nanika Archive Reader
